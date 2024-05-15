@@ -37,14 +37,13 @@ const Sidebar = ({ isOpen }) => {
           <div className="flex flex-col items-end justify-center py-[42px] px-0">
             <div className="w-[190px] h-[60px] flex flex-col items-center justify-center py-0 pr-[29px] pl-3.5 box-border">
               <div
-                className="self-stretch flex-1 bg-darkslateblue-200 overflow-hidden flex flex-row items-center justify-center py-0 pr-[65px] pl-[62px]"
+                className="  cursor-pointer bg-darkslateblue-200 overflow-hidden flex flex-row items-center justify-center py-1 pr-[65px] pl-[62px]"
                 onClick={() => handleNavigation('/dashboard')}
               >
-                <div className="w-5 flex flex-row items-center justify-center py-2 pr-0 pl-1 box-border">
-                  <b className="relative text-lg">Dashboard</b>
+                <div className="w-5 flex flex-row items-center justify-center py-0 pr-0 pl-1 box-border">
+                  <b className="relative text-base">Dashboard</b>
                 </div>
               </div>
-
               {/* Vertical Lines */}
               <div className="flex flex-row items-center justify-center py-0 pr-0 pl-[92px] gap-[5px]">
                 <div className="w-2 relative bg-darkslateblue-200 h-[25px] overflow-hidden shrink-0"/>

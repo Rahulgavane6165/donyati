@@ -24,6 +24,7 @@ const ForgotPasswordForm = () => {
 
     if (email.trim() === "") {
       setErrorMessage("Email is required");
+      setloader(false);
       return;
     }
 
@@ -205,9 +206,9 @@ const ForgotPasswordForm = () => {
                 disabled={emailSent}
                 className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-2 border-2 rounded-lg font-medium bg-lime-400 hover:bg-lime-600 focus:bg-lime-900 text-white"
               >
-                Confirm
+                Get OTP
               </button>
-              <div className="text-green-900 font-bold">{errorMessage}*</div>
+              <div className="text-green-900 font-bold">{errorMessage}</div>
             </div>
           </div>
         </>

@@ -62,9 +62,9 @@ const LoginForm = () => {
       <ReactCardFlip
         flipDirection="vertical"
         isFlipped={isFlipped}
-        className="flex align-middle justify-center"
+        className="flex align-middle items-center justify-center"
       >
-        <div className="w-80 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
+        <div className="md:w-80 sm:w-56 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
           {loading && <Loader />}{" "}
           <form onSubmit={handleSubmit}>
             {error && (
@@ -72,7 +72,7 @@ const LoginForm = () => {
             )}
 
             <h5 className="text-xl  mb-3">Sign in into your account</h5>
-            <div className="mb-4">
+            <div className="mb-2">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="email"
@@ -89,7 +89,7 @@ const LoginForm = () => {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="password"
@@ -135,7 +135,7 @@ const LoginForm = () => {
             >
               Login
             </button>
-            <span className="flex items-center pt-5 pb-5">
+            <span className="flex items-center pt-3 pb-3">
               <span className="h-px flex-1 bg-black"></span>
               <span className="shrink-0 px-6">or</span>
               <span className="h-px flex-1 bg-black"></span>
