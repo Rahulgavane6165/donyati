@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import Loader from "../loader/loader";
 import { toast } from "react-toastify";
 
-const ForgotPasswordForm = () => {
+const ForgotPasswordForm = ({ flipcard }) => {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
   const [otplVerified, setEotpVerified] = useState(false);
@@ -19,7 +19,7 @@ const ForgotPasswordForm = () => {
 
   const sendEmail = async () => {
     setError(null);
-    setErrorMessage(""); 
+    setErrorMessage("");
     setloader(true);
 
     if (email.trim() === "") {
@@ -179,15 +179,28 @@ const ForgotPasswordForm = () => {
   };
 
   return (
-    <div className="w-96 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
+    <div className="w-80 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
       {isloader && <Loader />}
       {true && (
         <>
-          <h5 className="text mb-3">Forgot Password?</h5>
+          <div className="flex justify-between">
+
+            <h5 className="text mb-3">Forgot Password?</h5>
+            {/* <p onClick={flipcard}> Go back</p> */}
+            <p onClick={flipcard} class="relative hover:cursor-pointer inline-flex items-center justify-center p-1 px-6 py-1 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 border-purple-500 rounded-full shadow-md group">
+              <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 translate-x-full bg-purple-500 group-hover:translate-x-0 ease">
+                <svg class="w-6 h-6 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </span>
+              <span class="flex items-center justify-center w-full h-full text-purple-500 transition-all duration-300 transform group-hover:translate-x-full ease-in-out">Go Back</span>
+            </p>
+          </div>
+            <br/>
           <div className="flex flex-1 flex-col  space-y-5 -w-md mx-auto ">
             <div className="flex flex-col space-y-2 text-center">
               <h2 className="text-xl md:text-xl font-bold">
-                Enter your email address below.
+                Enter your email
               </h2>
             </div>
             <div className="flex flex-col max-w-md space-y-5">

@@ -60,11 +60,11 @@ const LoginForm = () => {
   return (
     <>
       <ReactCardFlip
-        flipDirection="vertical"
-        isFlipped={isFlipped}
-        className="flex align-middle items-center justify-center"
+         flipDirection="vertical"
+         isFlipped={isFlipped}
+         className={`flex align-middle justify-center `}
       >
-        <div className="md:w-80 sm:w-56 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
+        <div className="md:w-80  bg-white p-8 pt-2 rounded shadow-md flex flex-col">
           {loading && <Loader />}{" "}
           <form onSubmit={handleSubmit}>
             {error && (
@@ -152,13 +152,13 @@ const LoginForm = () => {
                 href="/Register"
               >
                 Sign up{" "}
-              </Link>
+              </Link>             
             </strong>{" "}
           </p>
         </div>
 
         <div>
-          <ForgotPasswordForm />
+          <ForgotPasswordForm flipcard = {flipcard} />
         </div>
       </ReactCardFlip>
     </>

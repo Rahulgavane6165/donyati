@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useState } from "react";
+
 import Checkbox from "../common/Checkbox";
 import Link from "next/link";
 import Loader from '../loader/loader'
@@ -8,10 +10,10 @@ import SSOUser from "./SSOuser";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 const RegisterForm = () => {
   const router = useRouter();
+  const checkboxRef = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -60,6 +62,11 @@ const RegisterForm = () => {
     setIsSSOUser(event.target.checked);
   };
 
+  const handleBackButton = () => {
+    setIsSSOUser(false); // Set isSSOUser to false when back button is clicked
+    checkboxRef.current.checked = false;
+  };
+
   return (
     <>
       <ReactCardFlip
@@ -69,7 +76,7 @@ const RegisterForm = () => {
           !isSSOUser ? "flip-slow" : "flip-fast"
         }`}
       >
-        <SSOUser />
+        <SSOUser handleBackButton={handleBackButton} />
 
         <div className="w-72 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
           {isSubmitting && (
@@ -110,6 +117,7 @@ const RegisterForm = () => {
               >
                 <input
                   type="checkbox"
+                  ref={checkboxRef}
                   id="AcceptConditions"
                   className="peer sr-only"
                   onChange={handleToggle}

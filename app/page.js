@@ -5,12 +5,12 @@ import VideoBackground from './(components)/common/VideoBackground';
 
 const LoginPage = () => {
   return (
-    <div className="relative">
-      <VideoBackground />
-      <div className="absolute right-0 top-2 transform  mr-8 z-10">
-        <LoginForm />
-      </div>
+    <>
+    <VideoBackground />
+    <div className="absolute right-0 top-5 transform  mr-8 z-10">
+      <LoginForm />
     </div>
+    </>
   );
 };
 
