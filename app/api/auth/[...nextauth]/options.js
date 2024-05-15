@@ -44,7 +44,6 @@ export const options = {
           last_logged_in: token.last_logged_in
         };
       }
-      console.log(session)
       return session;
     },
   },

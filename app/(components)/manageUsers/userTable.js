@@ -77,9 +77,9 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
     return (
-        <TableContainer component={Paper}>
-            <Table {...getTableProps()}>
-                <TableHead className='bg-slate-200 border border-slate-300'>
+        <TableContainer className='border border-slate-500' component={Paper}>
+            <Table {...getTableProps()} >
+                <TableHead className='bg-slate-200 border'>
                     {headerGroups.map(headerGroup => (
                         <TableRow key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (

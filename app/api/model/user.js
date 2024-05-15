@@ -28,7 +28,7 @@ const createUser = async (
   accessType.MODULE = {};
   
   if (checkbox1) {
-    accessType.MODULE.CloudAssurance = false; 
+    accessType.MODULE["Cloud Assurance"] = false; 
   }
   if (checkbox2) {
     accessType.MODULE.KPI = false; 
@@ -79,7 +79,7 @@ const createssoUser = async (user) => {
   accessType.MODULE = {};
   
   if (true) {
-    accessType.MODULE.CloudAssurance = false; 
+    accessType.MODULE["Cloud Assurance"] = false; 
   }
   if (true) {
     accessType.MODULE.KPI = false; 

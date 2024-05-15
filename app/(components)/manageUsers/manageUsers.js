@@ -138,7 +138,7 @@ const ManageUsers = () => {
 
   
   return (
-    <div className="bg-zinc-200 w-full p-4">
+    <div className="bg-white w-full p-4">
       <div className="flex justify-between items-center mb-2">
         {loading && <Loader />}{" "}
         <h1 className="text-lg font-bold text-gray-500">Manage User Table</h1>
