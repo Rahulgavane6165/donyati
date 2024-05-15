@@ -64,7 +64,7 @@ const LoginForm = () => {
          isFlipped={isFlipped}
          className={`flex align-middle justify-center `}
       >
-        <div className="md:w-80  bg-white p-8 pt-2 rounded shadow-md flex flex-col">
+        <div className="md:w-80 h-full  bg-white p-8 pt-2 rounded shadow-md flex flex-col">
           {loading && <Loader />}{" "}
           <form onSubmit={handleSubmit}>
             {error && (
