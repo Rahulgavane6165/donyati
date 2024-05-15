@@ -101,8 +101,9 @@ function Popup({ isOpen, onClose, email, userRole }) {
 
 
   return (
+    <div className='pb-10'>
     <DialogContent >
-      <Dialog open={isOpen} onClose={onClose} aria-labelledby="responsive-dialog-title" sx={{ "& .MuiDialog-container": { "& .MuiPaper-root": { width: "100%", maxWidth: "600px", marginTop: '10%' }, }, }}>
+      <Dialog open={isOpen} onClose={onClose} aria-labelledby="responsive-dialog-title" sx={{ "& .MuiDialog-container": { "& .MuiPaper-root": { width: "100%", maxWidth: "600px", marginTop: '6%' }, }, }}>
         <DialogTitle id="responsive-dialog-title" sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h6" component="div">
             Select Groups
@@ -178,6 +179,7 @@ function Popup({ isOpen, onClose, email, userRole }) {
         </Box>
       </Dialog>
     </DialogContent>
+    </div>
 
   );
 }

@@ -182,7 +182,7 @@ const ManageUsers = () => {
         </div>
 
       </div>
-      <div className="overflow-x-auto min-w-full">
+      <div className="overflow-x-auto pb-20 min-w-full">
 
         <UserTable className="min-w-full divide-y border border-slate-300 divide-gray-200"
           users={filteredUsers} selectedEmails={selectedEmails} handleRowSelect={handleRowSelect} handlesingleEdit={handlesingleEdit} handleSelectAll={handleSelectAll} handlesingleselect={handlesingleselect}
