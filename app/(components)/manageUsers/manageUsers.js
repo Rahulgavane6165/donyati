@@ -27,11 +27,15 @@ const ManageUsers = () => {
 
   useEffect(() => {
     if (status !== "loading" && (!session || !session.user || session.user.role !== 'admin')) {
+      alert("not user")
       router.push("/");
     }
-    setSelectedEmails([])
-    setSelectedEmailProps([])
-    fetchUsers(setUsers, setLoading);
+    if(status !== "loading" && session.user.role === 'admin' ){
+      setSelectedEmails([])
+      setSelectedEmailProps([])
+      fetchUsers(setUsers, setLoading);
+
+    }
 
   }, [router, session, status]);
 

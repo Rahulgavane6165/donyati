@@ -100,6 +100,7 @@ const RegisterForm = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
                 required
               />
             </div>
@@ -120,6 +121,7 @@ const RegisterForm = () => {
                   ref={checkboxRef}
                   id="AcceptConditions"
                   className="peer sr-only"
+                  autoComplete="one-time-checkbox"
                   onChange={handleToggle}
                 />
                 <span className="absolute inset-0 m-auto h-3 rounded-full bg-violet-300"></span>
@@ -144,6 +146,7 @@ const RegisterForm = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 required
               />
             </div>

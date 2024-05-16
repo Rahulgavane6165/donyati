@@ -53,7 +53,7 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
         {
             Header: 'Actions', accessor: 'email_actions', Cell: ({ row }) => (
                 <div className="flex flex-col gap-1">
-                    <Tooltip title="Edit" arrow placement="top" p-0 m-0>
+                    <Tooltip title="Edit" arrow placement="top">
                         <Button onClick={() => handlesingleEdit(row.original.email, row.original.role)}>
                             <FiEdit />
                         </Button>
@@ -81,9 +81,9 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
             <Table {...getTableProps()} >
                 <TableHead className='bg-slate-200 border'>
                     {headerGroups.map(headerGroup => (
-                        <TableRow key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
+                        <TableRow {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} >
                             {headerGroup.headers.map(column => (
-                                <TableCell className='overflow-x-scroll no-scrollbar' key={column.id} {...column.getHeaderProps()} style={{ whiteSpace: 'nowrap' }}>
+                                <TableCell className='overflow-x-scroll no-scrollbar' {...column.getHeaderProps()} key={column.id}  style={{ whiteSpace: 'nowrap' }}>
                                     {column.render('Header')}
                                 </TableCell>
                             ))}
@@ -94,10 +94,10 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
                     {rows.map(row => {
                         prepareRow(row);
                         return (
-                            <TableRow key={row.id} {...row.getRowProps()} className={`${row.index % 2 === 0 ? "bg-white" : "bg-gray-50"} ${row.index === 0 ? "first:rounded-t-lg" : ""} ${row.index === rows.length - 1 ? "last:rounded-b-lg" : ""}`}>
+                            <TableRow {...row.getRowProps()}  key={row.id} className={`${row.index % 2 === 0 ? "bg-white" : "bg-gray-50"} ${row.index === 0 ? "first:rounded-t-lg" : ""} ${row.index === rows.length - 1 ? "last:rounded-b-lg" : ""}`}>
                                 {row.cells.map(cell => {
                                     return (
-                                        <TableCell className='overflow-x-scroll no-scrollbar' key={cell.id} {...cell.getCellProps()} style={{ whiteSpace: 'nowrap', maxWidth: '200px' }}>
+                                        <TableCell className='overflow-x-scroll no-scrollbar' {...cell.getCellProps()} key={cell.id} style={{ whiteSpace: 'nowrap', maxWidth: '200px' }}>
                                             {cell.render('Cell')}
                                         </TableCell>
                                     );

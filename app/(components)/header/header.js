@@ -66,7 +66,7 @@ const Header = ({toggleOpen}) => {
                         <FontAwesomeIcon icon={faBars} onClick={toggleOpen} className="text-white cursor-pointer w-8 h-8" />
                     )}
                     <div className="flex items-center cursor-pointer" onClick={onLogoContainerClick}>
-                        <Image src="/assets/Donyati-Logo.svg" alt="Donyati Logo" width={90} height={90} />
+                        <Image  src="/assets/Donyati-Logo.svg" alt="Donyati Logo" width={90} height={90} priority />
                     </div>
                 </div>
 
