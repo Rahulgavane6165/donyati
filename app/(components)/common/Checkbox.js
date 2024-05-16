@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/solid";
-import React from "react";
 
 const Checkbox = ({ id, checked, onChange, label }) => {
   return (

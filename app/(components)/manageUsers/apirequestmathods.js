@@ -13,12 +13,18 @@ const fetchUsers = async (setUsers, setLoading) => {
     });
     if (response.ok) {
       const data = await response.json();
-      setUsers(data.users);
+      if (data && data.users) {
+        setUsers(data.users);
+      } else {
+        throw new Error("Invalid response format: users not found");
+      }
     } else {
       console.error("Failed to fetch users");
+      throw new Error(`Failed to fetch users: ${response.status}`);
     }
   } catch (error) {
     console.error("Error fetching users:", error);
+    toast.error("Failed to fetch users");
   } finally {
     setLoading(false);
   }
@@ -27,7 +33,7 @@ const fetchUsers = async (setUsers, setLoading) => {
 const deleteUserByEmail = async (email) => {
   try {
     const response = await fetch('/api/manageUsers/deleteUsers', {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -50,7 +56,7 @@ const deleteUserByEmail = async (email) => {
 const updateUserStatusByEmail = async (email, status) => {
   try {
     const response = await fetch('/api/manageUsers/updateUserStatus', {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },

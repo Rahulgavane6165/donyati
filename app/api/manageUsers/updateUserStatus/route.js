@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import isAdmin from '../middleware/isAdmin';
 import {updateUserStatusByEmail} from './updateUserStatusByEmial'
 
-export const POST = async (req) => {
+export const PATCH = async (req) => {
 
   const isAdminUser = await isAdmin(req);
 
