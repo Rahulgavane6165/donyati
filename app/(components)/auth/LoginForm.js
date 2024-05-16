@@ -143,9 +143,12 @@ const LoginForm = () => {
               <span className="h-px flex-1 bg-black"></span>
             </span>
           </form>
+          <div className='flex justify-between px-8'>
+              
           <GoogleButton />
           <GithubButton />
           <Microsoft />
+          </div>
           <p className="mt-3">
             Don{"'"}t have an account?{" "}
             <strong>

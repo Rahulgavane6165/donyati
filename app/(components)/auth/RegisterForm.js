@@ -1,15 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { handleValidateOTP, handleVerifyEmail } from './registermethods'
+import { useEffect, useRef, useState } from "react";
 
 import Checkbox from "../common/Checkbox";
+import { FaCheckCircle } from "react-icons/fa";
 import Link from "next/link";
-import Loader from '../loader/loader'
+import Loader from "../loader/loader";
 import ReactCardFlip from "react-card-flip";
 import SSOUser from "./SSOuser";
+import { TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+
+// import { decryptData, encryptData } from "../../api/server/utils/Crypto";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -22,8 +27,14 @@ const RegisterForm = () => {
   const [checkbox1, setCheckbox1] = useState(true);
   const [checkbox2, setCheckbox2] = useState(true);
   const [checkbox3, setCheckbox3] = useState(true);
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
 
   const { data: session, status } = useSession();
+
+
+
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -35,17 +46,22 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
+      if (!otpVerified) {
+        setError("Please verify your email")
+        setIsSubmitting(false);
+        return
+      }
+
       const userType = isSSOUser ? "SSO user" : "native user";
       const response = await fetch("/api/Register", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ email,password,checkbox1,checkbox2, checkbox3, userType,}),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, checkbox1, checkbox2, checkbox3, userType, }),
       });
 
       const data = await response.json();
-      if (!response.ok) {throw new Error(data.message);}
+      if (!response.ok) { throw new Error(data.message); }
 
       toast.success("Registered");
       router.push("/");
@@ -54,7 +70,7 @@ const RegisterForm = () => {
       console.error("Registration error:", error);
     }
 
-    finally{}
+    finally { }
     setIsSubmitting(false);
   };
 
@@ -72,26 +88,55 @@ const RegisterForm = () => {
       <ReactCardFlip
         flipDirection="vertical"
         isFlipped={!isSSOUser}
-        className={`flex align-middle justify-center ${
-          !isSSOUser ? "flip-slow" : "flip-fast"
-        }`}
+        className={`flex align-middle justify-center ${!isSSOUser ? "flip-slow" : "flip-fast"
+          }`}
       >
         <SSOUser handleBackButton={handleBackButton} />
 
-        <div className="w-72 bg-white p-8 pt-2 rounded shadow-md flex flex-col">
-          {isSubmitting && (
-         <Loader/>         
-          )}
+        <div className="w-80 bg-white px-8 pt-2 pb-6 rounded shadow-md flex flex-col">
+          {isSubmitting && (<Loader />)}
           <form onSubmit={handleSubmit}>
-            {error && (
-              <div className="text-red-500 px-6 py-1 rounded-md">
-                {error === "Email already exists"
-                  ? "Email already exists. Please use a different email."
-                  : error}
+            {error &&             
+                <div className=" text-red-600 font-bold px-2 py-1 text-sm my-2 rounded-md">
+                  {error}
+                </div>
+              }
+            <div className='flex justify-between px-2 '>
+              <h3 className="font-bold text-2xl mb-3">Sign up </h3>
+              <div className="flex items-center mb-1">
+                <label
+                  className="block text-gray-700 text-sm font-bold mr-2"
+                  htmlFor="isSSOUser"
+                >
+                  Native
+                </label>
+                <label
+                  htmlFor="AcceptConditions"
+                  className="relative h-8 w-12 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
+                >
+                  <input
+                    type="checkbox"
+                    ref={checkboxRef}
+                    id="AcceptConditions"
+                    className="peer sr-only"
+                    autoComplete="one-time-checkbox"
+                    onChange={handleToggle}
+                  />
+                  <span className="absolute inset-0 m-auto h-3 rounded-full bg-violet-300"></span>
+                  <span className="absolute inset-y-0 start-0 m-auto size-6 rounded-full bg-violet-500 transition-all peer-checked:start-6 peer-checked:[&_>_*]:scale-0">
+                    <span className="absolute inset-0 m-auto size-4 rounded-full bg-gray-200 transition">
+                      {" "}
+                    </span>
+                  </span>
+                </label>
+                <label
+                  className="block text-gray-700 text-sm font-bold ml-2"
+                  htmlFor="isSSOUser"
+                >
+                  SSO
+                </label>
               </div>
-            )}
-
-            <h3 className="font-bold text-2xl mb-3">Sign up </h3>
+            </div>
             <div className="mb-3">
               <input
                 className="shadow appearance-none border border-lime-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline"
@@ -104,40 +149,45 @@ const RegisterForm = () => {
                 required
               />
             </div>
-
-            <div className="flex items-center mb-3">
-              <label
-                className="block text-gray-700 text-sm font-bold mr-2"
-                htmlFor="isSSOUser"
+            {otpSent ? (
+            <div className="flex pb-2 flex-row">
+              <input
+                className="shadow appearance-none border border-lime-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline"
+                type="text"
+                label="Enter OTP"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+                size="small"
+                disabled={otpVerified}
+              />
+              <button
+                variant="contained"
+                type='button'
+                onClick={() => handleValidateOTP(setError, setOtpVerified, otp)}
+                className={`p-1 my-auto ml-2 rounded-full  ${otpVerified ? "bg-green-500" : "bg-lime-400"
+                  }`}
               >
-                Native User
-              </label>
-              <label
-                htmlFor="AcceptConditions"
-                className="relative h-8 w-12 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
-              >
-                <input
-                  type="checkbox"
-                  ref={checkboxRef}
-                  id="AcceptConditions"
-                  className="peer sr-only"
-                  autoComplete="one-time-checkbox"
-                  onChange={handleToggle}
+                <FaCheckCircle
+                  style={{ height: "1.5em", width: "1.5em" }}
+                  className="text-white"
                 />
-                <span className="absolute inset-0 m-auto h-3 rounded-full bg-violet-300"></span>
-                <span className="absolute inset-y-0 start-0 m-auto size-6 rounded-full bg-violet-500 transition-all peer-checked:start-6 peer-checked:[&_>_*]:scale-0">
-                  <span className="absolute inset-0 m-auto size-4 rounded-full bg-gray-200 transition">
-                    {" "}
-                  </span>
-                </span>
-              </label>
-              <label
-                className="block text-gray-700 text-sm font-bold ml-2"
-                htmlFor="isSSOUser"
-              >
-                SSO User
-              </label>
+              </button>
             </div>
+          ) : (
+            email && (
+              <button
+                variant="contained"
+                type='button'
+                onClick={() => handleVerifyEmail(email, setOtpSent, setError)}
+                className="bg-white text-sm text-lime-400 px-2 py-1 font-semibold hover:text-blue-500 ml-40  "
+              >
+                Verify Email
+              </button>
+            )
+          )}
+
             <div className="mb-4">
               <input
                 className="shadow appearance-none border border-lime-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline"
@@ -150,6 +200,7 @@ const RegisterForm = () => {
                 required
               />
             </div>
+
             {/* ==================== */}
             <Checkbox
               id="checkbox1"
@@ -178,6 +229,7 @@ const RegisterForm = () => {
               Register
             </button>
           </form>
+          
           <p className="mt-3">
             Have an account?{" "}
             <strong>

@@ -47,8 +47,17 @@ const sendEmail = async (to, subject, html) => {
   }
 };
 
+
+const sendRegisterOTPEmail = async (to, otp) => {
+  const { subject, content } = emailData.registerotp;
+  const html = emailTemplate(subject, content + otp);
+  sendEmail(to, subject, html);
+};
+
+
 module.exports = {
   sendWelcomeEmail,
   sendOTPEmail,
   sendInformationEmail,
+  sendRegisterOTPEmail
 };

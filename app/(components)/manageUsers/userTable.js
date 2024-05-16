@@ -48,31 +48,54 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
                 />
             )
         },
-        { Header: 'Last login', accessor: 'last_logged_in', Cell: ({ value }) => new Date(value).toLocaleDateString("en-IN") },
+        {
+            Header: 'Last login', accessor: 'last_logged_in',
+            Cell: ({ value }) => {
+                const date = new Date(value);
+                const formattedDate = date.toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                });
+                const timeString = date.toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "numeric",
+                });
+                const [time, modifier] = timeString.split(" ");
+                const [hours, minutes] = time.split(":");
+                const formattedTime = `${hours % 12 || 12}:${minutes} ${modifier}`;
+                return (
+                    <>
+                        <div className='mb-3'>{formattedDate}</div>
+                        <div>{formattedTime}</div>
+                    </>
+                );
+            }
+        },
         { Header: 'Status', accessor: 'is_active' },
         {
             Header: 'Actions', accessor: 'email_actions', Cell: ({ row }) => (
                 <div className="flex flex-col gap-1">
                     <Tooltip title="Edit" arrow placement="top">
                         <Button onClick={() => handlesingleEdit(row.original.email, row.original.role)}>
-                            <FiEdit />
+                            <FiEdit style={{ width: "18px", height: "18px" }}/>
                         </Button>
                     </Tooltip>
                     <Tooltip title="Delet" arrow placement="right">
-                        <Button  onClick={() => handlesingleselect(row.original.email,'delete')}>
-                            <FiDelete />
+                        <Button onClick={() => handlesingleselect(row.original.email, 'delete')}>
+                            <FiDelete style={{ width: "18px", height: "18px" }}/>
                         </Button>
                     </Tooltip>
                     <Tooltip title="status" arrow placement="bottom">
-                        <Button onClick={() => handlesingleselect(row.original.email,'status')} >
-                            {row.original.is_active === 'Active' ? <FiCheckCircle /> : <FiCircle />}
+                        <Button onClick={() => handlesingleselect(row.original.email, 'status')} >
+                            {row.original.is_active === 'Active' ? <FiCheckCircle style={{ width: "18px", height: "18px" }} /> : <FiCircle style={{ width: "18px", height: "18px" }} />}
                         </Button>
                     </Tooltip>
                 </div>
             )
         }
 
-    ], [selectedEmails, handleRowSelect, handleSelectAll, handlesingleEdit,handlesingleselect, data]);
+    ], [selectedEmails, handleRowSelect, handleSelectAll, handlesingleEdit, handlesingleselect, data]);
 
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data });
 
@@ -83,7 +106,7 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
                     {headerGroups.map(headerGroup => (
                         <TableRow {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} >
                             {headerGroup.headers.map(column => (
-                                <TableCell className='overflow-x-scroll no-scrollbar' {...column.getHeaderProps()} key={column.id}  style={{ whiteSpace: 'nowrap' }}>
+                                <TableCell className='overflow-x-scroll no-scrollbar' {...column.getHeaderProps()} key={column.id} style={{ whiteSpace: 'nowrap' }}>
                                     {column.render('Header')}
                                 </TableCell>
                             ))}
@@ -94,10 +117,10 @@ const UserTable = ({ users, selectedEmails, handleRowSelect, handlesingleEdit, h
                     {rows.map(row => {
                         prepareRow(row);
                         return (
-                            <TableRow {...row.getRowProps()}  key={row.id} className={`${row.index % 2 === 0 ? "bg-white" : "bg-gray-50"} ${row.index === 0 ? "first:rounded-t-lg" : ""} ${row.index === rows.length - 1 ? "last:rounded-b-lg" : ""}`}>
+                            <TableRow {...row.getRowProps()} key={row.id} className={`${row.index % 2 === 0 ? "bg-white" : "bg-gray-50"} ${row.index === 0 ? "first:rounded-t-lg" : ""} ${row.index === rows.length - 1 ? "last:rounded-b-lg" : ""}`}>
                                 {row.cells.map(cell => {
                                     return (
-                                        <TableCell className='overflow-x-scroll no-scrollbar' {...cell.getCellProps()} key={cell.id} style={{ whiteSpace: 'nowrap', maxWidth: '200px' }}>
+                                        <TableCell className='overflow-x-scroll no-scrollbar' {...cell.getCellProps()} key={cell.id} style={{ whiteSpace: "nowrap",maxWidth: "150px", padding: "10px",wordWrap: "break-word", }}>
                                             {cell.render('Cell')}
                                         </TableCell>
                                     );

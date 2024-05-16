@@ -1,5 +1,6 @@
 // components/GithubButton.js
 
+import { FaGithub } from "react-icons/fa";
 import { signIn } from 'next-auth/react';
 
 const GithubButton = () => {
@@ -9,10 +10,16 @@ const GithubButton = () => {
 
   return (
     <button
-      onClick={handleSignIn}
-      className="bg-lime-400 hover:bg-lime-600 focus:bg-lime-900 focus:ring-offset-red-200 transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 w-full text-white py-2 px-3 rounded focus:shadow-outline self-end mt-3">
-      Continue with Github
-    </button>
+    onClick={handleSignIn}
+    className=" bg-white p-2 relative inline-block items-center  justify-center  focus:outline-none  "
+  >
+    <div className="relative group">
+      <div className="absolute top-full  left-1/2 transform text-black -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        GitHub
+      </div>
+      <FaGithub style={{ fontSize: "25px" }} />
+    </div>
+  </button>
   );
 };
 

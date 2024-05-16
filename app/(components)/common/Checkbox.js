@@ -21,7 +21,7 @@ const Checkbox = ({ id, checked, onChange, label }) => {
           </div>
         </label>
 
-        <span className="checkbox-text flex-1 ml-3 px-3 py-2 rounded-2 text-sm font-bold bg-gradient-to-b from-violet-400 to-violet-600 text-white text-center">
+        <span className="checkbox-text flex-1 ml-3 px-3 py-1 rounded-2 text-sm font-bold bg-gradient-to-b from-violet-400 to-violet-600 text-white text-center">
           {label}
         </span>
       </label>

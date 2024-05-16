@@ -12,5 +12,9 @@ module.exports = {
       subject: 'Important Information',
       content: 'Important information: Please read carefully.',
     },
+    registerotp: {
+      subject: "OTP for Sign Up ",
+      content: "Your OTP for signup is: ",
+    },
   };
   
