@@ -79,7 +79,7 @@ function Popup({ isOpen, onClose, email, userRole }) {
 
       // Send update request to API
       const response = await fetch("/api/manageUsers/updateUser", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
