@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 // apiRequests.js
 
 const fetchUsers = async (setUsers, setLoading) => {
-  alert("Im called")
   setLoading(true);
   try {
     const response = await fetch("/api/manageUsers/userDetails", {
@@ -31,7 +30,7 @@ const fetchUsers = async (setUsers, setLoading) => {
   }
 };
 
-const deleteUserByEmail = async (email) => {
+const deleteUserByEmail = async (email, setUsers, setLoading) => {
   try {
     const response = await fetch('/api/manageUsers/deleteUsers', {
       method: 'DELETE',
@@ -45,6 +44,7 @@ const deleteUserByEmail = async (email) => {
       throw new Error('Failed to delete user');
     }
     toast.success("User deleted")
+    fetchUsers(setUsers, setLoading)
   } catch (error) {
     toast.error("failed to delete User")
     console.error('Error deleting user:', error);
@@ -53,7 +53,7 @@ const deleteUserByEmail = async (email) => {
   }
 };
 
-const updateUserStatusByEmail = async (email, status) => {
+const updateUserStatusByEmail = async (email, status, setUsers, setLoading) => {
   try {
     const response = await fetch('/api/manageUsers/updateUserStatus', {
       method: 'PATCH',
@@ -67,6 +67,7 @@ const updateUserStatusByEmail = async (email, status) => {
       throw new Error('Failed to update user status');
     }
     toast.success("updated successfully")
+    fetchUsers(setUsers, setLoading)
   } catch (error) {
     toast.error("Failed to update")
     console.error('Error updating user status:', error);

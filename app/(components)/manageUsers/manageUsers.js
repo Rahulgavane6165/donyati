@@ -89,12 +89,12 @@ const ManageUsers = () => {
 
   const handlesingleselect = (email, action) => {
     if (action === 'delete') {
-      deleteUserByEmail([email]);
+      deleteUserByEmail([email], setUsers, setLoading);
       fetchUsers(setUsers, setLoading);
     }
     else {
       const Status = users.find(user => user.email === email).is_active === userStatusMap.Active ? userStatusMap.InActive : userStatusMap.Active;
-      updateUserStatusByEmail([email], Status);
+      updateUserStatusByEmail([email], Status, setUsers, setLoading);
       fetchUsers(setUsers, setLoading);
     }
   };
