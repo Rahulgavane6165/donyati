@@ -154,7 +154,7 @@ const LoginForm = () => {
             <strong>
               <Link
                 className="text-blue-700 hover:text-blue-800 hover:underline"
-                href="/Register"
+                href="/register"
               >
                 Sign up{" "}
               </Link>             

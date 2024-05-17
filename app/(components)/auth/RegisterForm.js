@@ -171,7 +171,7 @@ const RegisterForm = () => {
               <button
                 variant="contained"
                 type='button'
-                onClick={() => handleVerifyEmail(email, setOtpSent, setError)}
+                    onClick={() => handleVerifyEmail(email, setOtpSent, setError, setIsSubmitting)}
                 className="bg-white text-sm text-lime-400 px-2 py-1 font-semibold hover:text-blue-500 ml-40  "
               >
                 Verify Email

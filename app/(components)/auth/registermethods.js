@@ -19,7 +19,8 @@ const storeOTP = (otp) => {
     return null;
   };
 
-  const handleVerifyEmail = async ( email, setOtpSent, setError ) => {
+const handleVerifyEmail = async (email, setOtpSent, setError, setIsSubmitting ) => {
+  setIsSubmitting(true)
     try {
       const responseEmail = await fetch(`/api/checkUserExists?email=${email}`, {
         method: "GET",
@@ -53,6 +54,8 @@ const storeOTP = (otp) => {
       console.error("Error verifying email:", error);
 
       setError(error.message || "Error sending OTP. Please try again later.");
+    }finally{
+      setIsSubmitting(false)
     }
   };
 
