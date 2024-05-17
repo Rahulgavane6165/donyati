@@ -26,8 +26,7 @@ const ManageUsers = () => {
 
 
   useEffect(() => {
-    if (status !== "loading" && (!session || !session.user || session.user.role !== 'admin')) {
-      alert("not user")
+    if (status !== "loading" && (!session || !session?.user || session?.user?.role !== 'admin')) {
       router.push("/");
     }
     if(status !== "loading" && session.user.role === 'admin' ){
@@ -37,7 +36,7 @@ const ManageUsers = () => {
 
     }
 
-  }, [router, session, status]);
+  }, [router, session, status, setUsers]);
 
   
   const handleRowSelect = (email) => {
@@ -59,12 +58,21 @@ const ManageUsers = () => {
 
   const handleuserFilter = (buttonName) => {
     setSelectedButton(buttonName);
+    setSelectedEmails([]);
   };
+  
   const handleSelectAll = () => {
+    let filteredEmails = [];
+    if (selectedButton === "All") {
+      filteredEmails = users.map(user => user.email);
+    } else {
+      filteredEmails = filteredUsers.map(user => user.email);
+    }
     setSelectedEmails(prevSelectedEmails =>
-      prevSelectedEmails.length === users.length ? [] : users.map(user => user.email)
+      prevSelectedEmails.length === filteredEmails.length ? [] : filteredEmails
     );
   };
+  
 
   const handleBulkEdit = () => {
     setSelectedEmailProps([]);

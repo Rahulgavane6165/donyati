@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 // apiRequests.js
 
 const fetchUsers = async (setUsers, setLoading) => {
+  alert("Im called")
   setLoading(true);
   try {
     const response = await fetch("/api/manageUsers/userDetails", {
@@ -43,7 +44,6 @@ const deleteUserByEmail = async (email) => {
     if (!response.ok) {
       throw new Error('Failed to delete user');
     }
-
     toast.success("User deleted")
   } catch (error) {
     toast.error("failed to delete User")

@@ -1,7 +1,7 @@
 "use client";
 
 import { handleValidateOTP, handleVerifyEmail } from './registermethods'
-import { useEffect, useRef, useState } from "react";
+import {useRef, useState} from "react";
 
 import Checkbox from "../common/Checkbox";
 import { FaCheckCircle } from "react-icons/fa";
@@ -9,7 +9,6 @@ import Link from "next/link";
 import Loader from "../loader/loader";
 import ReactCardFlip from "react-card-flip";
 import SSOUser from "./SSOuser";
-import { TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -32,9 +31,6 @@ const RegisterForm = () => {
   const [otpVerified, setOtpVerified] = useState(false);
 
   const { data: session, status } = useSession();
-
-
-
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -96,11 +92,6 @@ const RegisterForm = () => {
         <div className="w-80 bg-white px-8 pt-2 pb-6 rounded shadow-md flex flex-col">
           {isSubmitting && (<Loader />)}
           <form onSubmit={handleSubmit}>
-            {error &&             
-                <div className=" text-red-600 font-bold px-2 py-1 text-sm my-2 rounded-md">
-                  {error}
-                </div>
-              }
             <div className='flex justify-between px-2 '>
               <h3 className="font-bold text-2xl mb-3">Sign up </h3>
               <div className="flex items-center mb-1">
@@ -229,6 +220,11 @@ const RegisterForm = () => {
               Register
             </button>
           </form>
+          {error &&             
+                <div className=" text-red-600 font-bold px-2 py-1 text-sm my-2 rounded-md">
+                  {error}
+                </div>
+              }
           
           <p className="mt-3">
             Have an account?{" "}

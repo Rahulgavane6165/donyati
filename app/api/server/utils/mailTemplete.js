@@ -1,9 +1,6 @@
-const fs = require('fs');
-const { Base64 } = require('js-base64');
+
 function emailTemplate(subject, content) {
   const companyName = process.env.COMPANY_NAME || "Donyati"; 
-  const imageData = fs.readFileSync('./images/donyati.png'); // Read image file
-  const base64String = base64.encode(imageData); // Encode to base64
   return `
       <!DOCTYPE html>
       <html lang="en">
@@ -16,7 +13,7 @@ function emailTemplate(subject, content) {
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="500" style="margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           <tr>
             <td style="padding: 20px; text-align: center;">
-              <img src="data:image/png;base64,${base64String}" alt="Logo wait" style="height: 50px; width: 50px; margin-right: 10px;">
+              <img src="/assets/donyati.png" alt="Logo wait" style="height: 50px; width: 50px; margin-right: 10px;">
               <h1 style="font-size: 24px; font-weight: bold; margin: 0;">${subject}</h1>
             </td>
           </tr>         
