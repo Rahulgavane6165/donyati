@@ -1,7 +1,7 @@
 "use client";
 
 import { handleValidateOTP, handleVerifyEmail } from './registermethods'
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import Checkbox from "../common/Checkbox";
 import { FaCheckCircle } from "react-icons/fa";
@@ -31,6 +31,18 @@ const RegisterForm = () => {
   const [otpVerified, setOtpVerified] = useState(false);
 
   const { data: session, status } = useSession();
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => {
+        setError("");
+        setError(false);
+      }, 3000);
+
+      // Clear timeout when component unmounts or when error changes
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
+  
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -38,6 +50,8 @@ const RegisterForm = () => {
   if (session && session.user) {
     router.replace("/dashboard");
   }
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -219,12 +233,7 @@ const RegisterForm = () => {
             >
               Register
             </button>
-          </form>
-          {error &&             
-                <div className=" text-red-600 font-bold px-2 py-1 text-sm my-2 rounded-md">
-                  {error}
-                </div>
-              }
+          </form>         
           
           <p className="mt-3">
             Have an account?{" "}
@@ -234,7 +243,13 @@ const RegisterForm = () => {
               </Link>
             </strong>{" "}
           </p>
-        </div>
+          {error && (
+            <div className="flex justify-center bg-red-600 text-white font-bold px-2 py-1 text-sm my-2 rounded-md">
+              <div className="text-center"> {error}</div>
+            </div>
+          )}
+
+           </div>
       </ReactCardFlip>
     </>
   );

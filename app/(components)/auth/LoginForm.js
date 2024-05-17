@@ -33,6 +33,17 @@ const LoginForm = () => {
       router.push("/dashboard")
     }
   });
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => {
+        setError("");
+        setError(false);
+      }, 3000);
+
+      // Clear timeout when component unmounts or when error changes
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -67,11 +78,7 @@ const LoginForm = () => {
         <div className="md:w-80 h-full  bg-white p-8 pt-2 rounded shadow-md flex flex-col">
           {loading && <Loader />}{" "}
           <form onSubmit={handleSubmit}>
-            {error && (
-              <div className=" text-red-500 px-6 py-1 rounded-md">{error}</div>
-            )}
-
-            <h5 className="text-xl  mb-3">Sign in into your account</h5>
+             <h5 className="text-xl  mb-3">Sign in into your account</h5>
             <div className="mb-2">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -160,6 +167,11 @@ const LoginForm = () => {
               </Link>             
             </strong>{" "}
           </p>
+          {error && (
+            <div className="flex justify-center bg-red-600 text-white font-bold px-2 py-1 text-sm my-2 rounded-md">
+              <div className="text-center"> {error}</div>
+            </div>
+          )}
         </div>
 
         <div>
