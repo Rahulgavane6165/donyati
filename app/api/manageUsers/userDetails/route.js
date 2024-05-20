@@ -15,6 +15,7 @@ export const GET = async (req, res) => {
   try {
     // Fetch user details from the database using your custom function
     const users = await getAllUsers();
+    console.log("=================");
 
     // Return user details as response
     return NextResponse.json({ users }, { status: 200 });

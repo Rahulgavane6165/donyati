@@ -1,7 +1,7 @@
 "use client"
 
 import { deleteUserByEmail, fetchUsers, updateUserStatusByEmail } from './apirequestmathods'
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FaSearch } from "react-icons/fa";
 import Loader from "../loader/loader";
@@ -15,6 +15,7 @@ const ManageUsers = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [selectedButton, setSelectedButton] = useState("All");
+  const [dataFetched, setDataFetched] = useState(false); 
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [users, setUsers] = useState([]);
@@ -25,18 +26,24 @@ const ManageUsers = () => {
   const [loading, setLoading] = useState(true);
 
 
+  const fetchData = useCallback(async () => {
+    if (!dataFetched) {
+      await fetchUsers(setUsers, setLoading);
+      setDataFetched(true); // Set dataFetched to true after fetching data
+    }
+  }, [dataFetched]);
+
   useEffect(() => {
-    if (status !== "loading" && (!session || !session?.user || session?.user?.role !== 'admin')) {
+    if (status === "authenticated" && session?.user?.role === 'admin') {
+      fetchData();
+    }
+  }, [fetchData, session, status]);
+
+  useEffect(() => {
+    if (status !== "loading" && (!session || !session.user || session.user.role !== 'admin')) {
       router.push("/");
     }
-    if(status !== "loading" && session.user.role === 'admin' ){
-      setSelectedEmails([])
-      setSelectedEmailProps([])
-      fetchUsers(setUsers, setLoading);
-
-    }
-
-  }, [router, session, status, setUsers]);
+  }, [router, session, status]);
 
   
   const handleRowSelect = (email) => {
